@@ -1,4 +1,4 @@
-package no.exotech.pricefetcher.requestvalues
+package no.exotech.pricefetcher.common
 
 class MenyRequestValues() : RequestValues {
     override fun getHeaders(): List<Pair<String, String>> {
@@ -17,12 +17,10 @@ class MenyRequestValues() : RequestValues {
         )
     }
 
-    override val pageSize: Int
-        get() = 400
-    override val pages: IntRange
-        get() = 1..25
+    private val pageSize = 400
+    override val pages = (1..25).toList()
 
-    override fun getUrl(page: Int): String {
+    override fun getUrl(page: String): String {
         return "https://platform-rest-prod.ngdata.no/api/products/1300/7080000886050?page=$page&page_size=$pageSize" /*+
                 "&full_response=true&fieldset=maximal&facets=Category%2CAllergen"*/
     }

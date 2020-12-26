@@ -1,13 +1,12 @@
-package no.exotech.pricefetcher
+package no.exotech.pricefetcher.common
 
-import no.exotech.pricefetcher.requestvalues.RequestValues
 import okhttp3.Headers
 import okhttp3.Request
 
 class RequestBuilder private constructor(private val requestValues: RequestValues) {
     private val requestBuilder = createRequestBuilder()
 
-    fun withPage(page: Int): Request {
+    fun withPage(page: String): Request {
         return requestBuilder
             .url(requestValues.getUrl(page))
             .build()

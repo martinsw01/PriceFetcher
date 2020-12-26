@@ -1,10 +1,7 @@
 package no.exotech.pricefetcher
 
-import no.exotech.pricefetcher.requestvalues.MenyRequestValues
-import no.exotech.pricefetcher.requestvalues.RequestValues
-import no.exotech.pricefetcher.stores.Meny
-import no.exotech.pricefetcher.stores.MenyResponse
-import no.exotech.pricefetcher.stores.Store
+import no.exotech.pricefetcher.apis.Caller
+import no.exotech.pricefetcher.apis.stores.Meny
 import org.junit.jupiter.api.Test
 
 internal class CallerTest {

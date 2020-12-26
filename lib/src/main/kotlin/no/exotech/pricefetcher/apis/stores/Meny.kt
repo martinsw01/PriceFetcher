@@ -1,7 +1,7 @@
-package no.exotech.pricefetcher.stores
+package no.exotech.pricefetcher.apis.stores
 
-import no.exotech.pricefetcher.requestvalues.MenyRequestValues
-import no.exotech.pricefetcher.requestvalues.RequestValues
+import no.exotech.pricefetcher.common.MenyRequestValues
+import no.exotech.pricefetcher.common.RequestValues
 
 data class Meny(
     override val requestValues: RequestValues = MenyRequestValues(),

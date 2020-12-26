@@ -1,9 +1,10 @@
-package no.exotech.pricefetcher
+package no.exotech.pricefetcher.apis
 
 import com.google.gson.Gson
-import no.exotech.pricefetcher.requestvalues.RequestValues
-import no.exotech.pricefetcher.stores.Meny
-import no.exotech.pricefetcher.stores.Store
+import no.exotech.pricefetcher.common.RequestBuilder
+import no.exotech.pricefetcher.common.RequestValues
+import no.exotech.pricefetcher.apis.stores.Meny
+import no.exotech.pricefetcher.apis.stores.Store
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import java.util.stream.Collectors
@@ -28,7 +29,7 @@ object Caller {
     private fun callAllPages(requestValues: RequestValues): List<Response> {
         val requestBuilder = RequestBuilder.getRequestBuilder(requestValues)
         return requestValues.pages.parallelMap { page ->
-            client.newCall(requestBuilder.withPage(page)).execute()
+            client.newCall(requestBuilder.withPage("$page")).execute()
         }
     }
 
@@ -43,8 +44,8 @@ object Caller {
     }
 
     @JvmStatic
-    private fun <R> IntRange.parallelMap(mapper: (int: Int) -> R): List<R> {
-        return this.toList()
+    private fun <R, T> List<T>.parallelMap(mapper: (t: T) -> R): List<R> {
+        return this
             .parallelStream()
             .map { mapper(it) }
             .collect(Collectors.toList())
