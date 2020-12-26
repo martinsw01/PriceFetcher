@@ -1,0 +1,92 @@
+package no.exotech.pricefetcher.stores
+
+data class MenyResponse(
+    val hits: List<Hit>,
+    val max_score: Int,
+    val searchType: String,
+    val total: Int
+)
+
+data class Hit(
+    val alcoholWindow: Boolean,
+    val alternativePrice: Double,
+    val alternativeUnitType: String,
+    val amountInterval: Double,
+    val brand: String,
+    val calcPricePerUnit: Double,
+    val calcUnit: String,
+    val calcUnitType: String,
+    val categoryName: String,
+    val comparablePrice: Double,
+    val comparableUnitType: String,
+    val comparePricePerUnit: Double,
+    val compareUnit: String,
+    val coupon: Any,
+    val ean: String,
+    val environmentalCodes: List<EnvironmentalCode>,
+    val epdNumber: Int,
+    val imageName: String,
+    val isForSale: Boolean,
+    val isLocal: Boolean,
+    val isNew: Boolean,
+    val isOffer: Boolean,
+    val isOutOfStock: Boolean,
+    val minimumDurability: Int,
+    val mustOrderFromSupplier: Boolean,
+    val price: Double,
+    val pricePerUnit: Double,
+    val promotionDisplayName: String,
+    val promotionId: Int,
+    val promotions: List<Promotion>,
+    val recycleValue: Int,
+    val shoppingListGroupName: String,
+    val shoppingListGroupName1: String,
+    val shoppingListGroupName2: String,
+    val subtitle: String,
+    val title: String,
+    val unit: String,
+    val unitType: String,
+    val unitWeight: Double,
+    val usesPromotionPrice: Boolean,
+    val vendor: String,
+    val weight: Double
+)
+
+data class EnvironmentalCode(
+    val code: String,
+    val displayName: String,
+    val name: String
+)
+
+data class Promotion(
+    val alternativePrice: Double,
+    val comparablePrice: Any,
+    val freeText: String,
+    val from: String,
+    val fulfillmentThreshold: Int,
+    val hasPriority: Boolean,
+    val isMarketed: Boolean,
+    val marketText: String,
+    val marketTextLong: String,
+    val name: String,
+    val promoCalcPricePerUnit: Double,
+    val promoCalcUnit: String,
+    val promoCalcUnitType: String,
+    val promoComparePricePerUnit: Double,
+    val promoCompareUnit: String,
+    val promoCompareUnitType: String,
+    val promoFreeText: String,
+    val promoMarketText: String,
+    val promoMarketTextLong: String,
+    val promoName: String,
+    val promoPricePerUnit: Double,
+    val promoUnit: String,
+    val promoUnitType: String,
+    val promotionId: Int,
+    val promotionPrice: Double,
+    val status: Int,
+    val to: String,
+    val trumfCampaign: Boolean,
+    val type: Int,
+    val weightProduct: Boolean
+)
