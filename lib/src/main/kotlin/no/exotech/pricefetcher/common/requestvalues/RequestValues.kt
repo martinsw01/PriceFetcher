@@ -1,4 +1,4 @@
-package no.exotech.pricefetcher.common
+package no.exotech.pricefetcher.common.requestvalues
 
 interface RequestValues {
     fun getHeaders(): List<Pair<String, String>>

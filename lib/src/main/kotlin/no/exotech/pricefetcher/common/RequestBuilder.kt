@@ -1,5 +1,6 @@
 package no.exotech.pricefetcher.common
 
+import no.exotech.pricefetcher.common.requestvalues.RequestValues
 import okhttp3.Headers
 import okhttp3.Request
 

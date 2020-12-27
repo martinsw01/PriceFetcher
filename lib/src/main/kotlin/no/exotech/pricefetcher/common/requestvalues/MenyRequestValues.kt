@@ -1,6 +1,6 @@
-package no.exotech.pricefetcher.common
+package no.exotech.pricefetcher.common.requestvalues
 
-class MenyRequestValues() : RequestValues {
+class MenyRequestValues : RequestValues {
     override fun getHeaders(): List<Pair<String, String>> {
         return listOf(
             Pair("Connection", "keep-alive"),
