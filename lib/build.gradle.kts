@@ -23,9 +23,6 @@ dependencies {
     // Align versions of all Kotlin components
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
 
-    // Use the Kotlin JDK 8 standard library.
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation("com.google.guava:guava:29.0-jre")
 
@@ -34,6 +31,9 @@ dependencies {
 
     // Json serializing
     implementation("com.google.code.gson:gson:2.8.6")
+
+    // webs scraping
+    implementation("it.skrape:skrapeit-core:1.0.0-alpha6")
 
     // Junit 5 fo testing
     testImplementation("org.junit.jupiter:junit-jupiter:5.4.2")

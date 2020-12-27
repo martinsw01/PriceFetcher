@@ -1,4 +1,4 @@
-package no.exotech.pricefetcher.stores
+package no.exotech.pricefetcher.common.stores
 
 data class MenyResponse(
     val hits: List<Hit>,
