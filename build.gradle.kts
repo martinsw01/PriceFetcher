@@ -48,3 +48,6 @@ tasks.test {
         events("passed", "skipped", "failed")
     }
 }
+
+group = "no.exotech"
+version = "v0.1.1-alpha"
