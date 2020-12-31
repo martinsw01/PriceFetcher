@@ -12,6 +12,7 @@ plugins {
 
     // Apply the java-library plugin for API and implementation separation.
     `java-library`
+    `maven-publish`
 }
 
 repositories {
@@ -33,19 +34,29 @@ dependencies {
     implementation("com.google.code.gson:gson:2.8.6")
 
     // webs scraping
-    implementation("it.skrape:skrapeit-core:1.0.0-alpha6")
+    api("it.skrape:skrapeit-core:1.0.0-alpha6")
 
     // Junit 5 fo testing
     testImplementation("org.junit.jupiter:junit-jupiter:5.4.2")
 
-    // This dependency is exported to consumers, that is to say found on their compile classpath.
-    api("org.apache.commons:commons-math3:3.6.1")
 }
 
 tasks.test {
     useJUnitPlatform()
     testLogging {
         events("passed", "skipped", "failed")
+    }
+}
+
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "no.exotech"
+            artifactId = "pricefetcher"
+            version = "v0.1.1-alpha"
+            from(components["java"])
+        }
     }
 }
 
