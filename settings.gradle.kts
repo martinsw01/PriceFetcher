@@ -8,4 +8,4 @@
  */
 
 rootProject.name = "pricefetcher"
-include("lib")
+include("pricefetcher")
