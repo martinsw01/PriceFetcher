@@ -6,8 +6,7 @@ import no.exotech.pricefetcher.common.requestvalues.RequestValues
 
 class Meny : Store<MenyResponse> {
     override val requestValues: RequestValues = MenyRequestValues()
-    override val responseClass: Class<MenyResponse> = MenyResponse::class.java
-    override val mapper: (response: String) -> MenyResponse = { response ->
+    override val map: (response: String) -> MenyResponse = { response ->
         JsonMapper.map(response, MenyResponse::class.java)
     }
 }
