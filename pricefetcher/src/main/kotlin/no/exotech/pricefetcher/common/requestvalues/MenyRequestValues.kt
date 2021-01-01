@@ -17,8 +17,8 @@ class MenyRequestValues : RequestValues {
         )
     }
 
-    private val pageSize = 400
-    override val pages = (1..25).toList()
+    private val pageSize = 200
+    override val pages = (1..50).toList()
 
     override fun getUrl(page: String): String {
         return "https://platform-rest-prod.ngdata.no/api/products/1300/7080000886050?page=$page&page_size=$pageSize" /*+
