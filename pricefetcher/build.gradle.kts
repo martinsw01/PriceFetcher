@@ -24,6 +24,9 @@ dependencies {
     // Align versions of all Kotlin components
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
 
+    // Coroutines for asynchronous calls
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
+
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation("com.google.guava:guava:29.0-jre")
 
