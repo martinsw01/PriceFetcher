@@ -1,43 +1,40 @@
 package no.exotech.pricefetcher.common
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.withContext
 import no.exotech.pricefetcher.common.requestvalues.RequestValues
 import no.exotech.pricefetcher.common.stores.Store
 import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.Response
-import java.util.stream.Collectors
 
 object Caller {
-    @JvmStatic
-    private val CLIENT = OkHttpClient().newBuilder().build()
+    private val client = OkHttpClient().newBuilder().build()
 
-    @JvmStatic
-    fun <T : Any> call(store: Store<T>): List<T> {
-        val responses = callAllPages(store.requestValues)
-        return mapResponses(responses, store.mapper)
+    suspend fun <T : Any> call(store: Store<T>): List<T> {
+        val deferredResponses = callAllPages(store.requestValues)
+        return awaitAndMap(deferredResponses, store.map)
     }
 
-    @JvmStatic
-    private fun <T : Any> mapResponses(responses: List<Response>, map: (response: String) -> T): List<T> {
+    private suspend fun <T : Any> awaitAndMap(responses: List<Deferred<Response>>, map: (String) -> T): List<T> {
         return responses.mapNotNull { response ->
-            response.body?.string()?.let {
-                map(it)
+            response.await().body?.let {
+                map(it.string())
             }
         }
     }
 
-    @JvmStatic
-    private fun callAllPages(requestValues: RequestValues): List<Response> {
+    private suspend fun callAllPages(requestValues: RequestValues) = withContext(Dispatchers.IO){
         val requestBuilder = RequestBuilder.getRequestBuilder(requestValues)
-        return requestValues.pages.parallelMap { page ->
-            CLIENT.newCall(requestBuilder.withPage("$page")).execute()
+        requestValues.pages.map { page ->
+            callStoreAsync(requestBuilder.withPage(page.toString()), this)
         }
     }
 
-    @JvmStatic
-    private fun <R, T> List<T>.parallelMap(mapper: (t: T) -> R): List<R> {
-        return this
-            .parallelStream()
-            .map { mapper(it) }
-            .collect(Collectors.toList())
+    private fun callStoreAsync(request: Request, scope: CoroutineScope) = scope.async {
+        client.newCall(request).execute()
     }
 }
