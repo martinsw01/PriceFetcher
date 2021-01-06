@@ -40,7 +40,7 @@ object Caller {
         return try {
             call.execute().use { it.body?.string() }
         } catch (e: IOException) {
-            LOGGER.warn("Failed to call store. Are there an internet connection?", e)
+            LOGGER.warn("Failed to call store. Is there an internet connection?", e)
             return null
         }
     }
