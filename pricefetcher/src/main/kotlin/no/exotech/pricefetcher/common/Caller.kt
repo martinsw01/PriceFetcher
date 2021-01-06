@@ -1,6 +1,5 @@
 package no.exotech.pricefetcher.common
 
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -8,33 +7,41 @@ import kotlinx.coroutines.withContext
 import no.exotech.pricefetcher.common.requestvalues.RequestValues
 import no.exotech.pricefetcher.common.stores.Store
 import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
+import org.slf4j.LoggerFactory
+import java.io.IOException
 
 object Caller {
     private val client = OkHttpClient().newBuilder().build()
+    private val LOGGER = LoggerFactory.getLogger(Caller::class.java)
 
     suspend fun <T : Any> call(store: Store<T>): List<T> {
-        val deferredResponses = callAllPages(store.requestValues)
+        LOGGER.info("Calling ${store.javaClass.simpleName}")
+        val deferredResponses = callAllPagesAsync(store.requestValues)
         return awaitAndMap(deferredResponses, store.map)
     }
 
-    private suspend fun <T : Any> awaitAndMap(responses: List<Deferred<Response>>, map: (String) -> T): List<T> {
+    private suspend fun <T : Any> awaitAndMap(responses: List<Deferred<String?>>, map: (String) -> T): List<T> {
         return responses.mapNotNull { response ->
-            response.await().body?.let {
-                map(it.string())
-            }
+            response.await()?.let { map(it) }
         }
     }
 
-    private suspend fun callAllPages(requestValues: RequestValues) = withContext(Dispatchers.IO){
+    private suspend fun callAllPagesAsync(requestValues: RequestValues) = withContext(Dispatchers.IO) {
         val requestBuilder = RequestBuilder.getRequestBuilder(requestValues)
         requestValues.pages.map { page ->
-            callStoreAsync(requestBuilder.withPage(page.toString()), this)
+            async { callPage(requestBuilder, page) }
         }
     }
 
-    private fun callStoreAsync(request: Request, scope: CoroutineScope) = scope.async {
-        client.newCall(request).execute()
+    private fun callPage(requestBuilder: RequestBuilder, page: Any): String? {
+        val request = requestBuilder.withPage("$page")
+        val call = client.newCall(request)
+        LOGGER.debug("Calling page: $page, ${request.url.host}")
+        return try {
+            call.execute().use { it.body?.string() }
+        } catch (e: IOException) {
+            LOGGER.warn("Failed to call store. Are there an internet connection?", e)
+            return null
+        }
     }
 }
