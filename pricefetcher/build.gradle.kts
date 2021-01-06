@@ -20,6 +20,10 @@ repositories {
     jcenter()
 }
 
+java {
+    withSourcesJar()
+}
+
 dependencies {
     // Align versions of all Kotlin components
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
@@ -29,6 +33,9 @@ dependencies {
 
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation("com.google.guava:guava:29.0-jre")
+
+    // Logging facade
+    implementation("org.slf4j:slf4j-api:1.7.30")
 
     // For http requests
     implementation("com.squareup.okhttp3:okhttp:4.9.0")
@@ -41,6 +48,9 @@ dependencies {
 
     // Junit 5 fo testing
     testImplementation("org.junit.jupiter:junit-jupiter:5.4.2")
+
+    // Simple logger for tests
+    testImplementation("org.slf4j:slf4j-simple:1.7.30")
 
 }
 
