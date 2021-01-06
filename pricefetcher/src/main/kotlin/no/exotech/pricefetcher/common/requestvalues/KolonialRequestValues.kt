@@ -1,7 +1,7 @@
 package no.exotech.pricefetcher.common.requestvalues
 
 class KolonialRequestValues : RequestValues {
-    override fun getHeaders(): List<Pair<String, String>> { return emptyList() }
+    override val headers = emptyList<Pair<String, String>>()
 
     override val pages = listOf(
         // Frukt og grønt
