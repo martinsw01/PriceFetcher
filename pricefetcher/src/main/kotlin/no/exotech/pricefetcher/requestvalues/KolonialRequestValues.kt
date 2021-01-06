@@ -1,4 +1,4 @@
-package no.exotech.pricefetcher.common.requestvalues
+package no.exotech.pricefetcher.requestvalues
 
 class KolonialRequestValues : RequestValues {
     override val headers = emptyList<Pair<String, String>>()

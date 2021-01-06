@@ -1,4 +1,4 @@
-package no.exotech.pricefetcher.common.requestvalues
+package no.exotech.pricefetcher.requestvalues
 
 interface RequestValues {
     val headers: List<Pair<String, String>>

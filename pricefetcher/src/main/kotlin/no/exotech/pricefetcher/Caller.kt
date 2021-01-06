@@ -1,11 +1,11 @@
-package no.exotech.pricefetcher.common
+package no.exotech.pricefetcher
 
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
-import no.exotech.pricefetcher.common.requestvalues.RequestValues
-import no.exotech.pricefetcher.common.stores.Store
+import no.exotech.pricefetcher.requestvalues.RequestValues
+import no.exotech.pricefetcher.stores.Store
 import okhttp3.OkHttpClient
 import org.slf4j.LoggerFactory
 import java.io.IOException

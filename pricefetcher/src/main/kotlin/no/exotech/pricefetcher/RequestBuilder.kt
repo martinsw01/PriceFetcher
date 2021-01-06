@@ -1,6 +1,6 @@
-package no.exotech.pricefetcher.common
+package no.exotech.pricefetcher
 
-import no.exotech.pricefetcher.common.requestvalues.RequestValues
+import no.exotech.pricefetcher.requestvalues.RequestValues
 import okhttp3.Headers
 import okhttp3.Request
 import org.slf4j.LoggerFactory

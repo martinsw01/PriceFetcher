@@ -1,6 +1,6 @@
-package no.exotech.pricefetcher.common.stores
+package no.exotech.pricefetcher.stores
 
-import no.exotech.pricefetcher.common.requestvalues.KolonialRequestValues
+import no.exotech.pricefetcher.requestvalues.KolonialRequestValues
 import no.exotech.pricefetcher.webscraper.KolonialItem
 import no.exotech.pricefetcher.webscraper.KolonialScraperValues
 import no.exotech.pricefetcher.webscraper.Scraper

@@ -1,4 +1,4 @@
-package no.exotech.pricefetcher.common.requestvalues
+package no.exotech.pricefetcher.requestvalues
 
 class MenyRequestValues : RequestValues {
     override val headers = listOf(

@@ -1,4 +1,4 @@
-package no.exotech.pricefetcher.apis
+package no.exotech.pricefetcher
 
 import com.google.gson.Gson
 

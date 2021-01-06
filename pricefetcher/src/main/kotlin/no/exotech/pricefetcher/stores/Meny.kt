@@ -1,8 +1,8 @@
-package no.exotech.pricefetcher.common.stores
+package no.exotech.pricefetcher.stores
 
-import no.exotech.pricefetcher.apis.JsonMapper
-import no.exotech.pricefetcher.common.requestvalues.MenyRequestValues
-import no.exotech.pricefetcher.common.requestvalues.RequestValues
+import no.exotech.pricefetcher.JsonMapper
+import no.exotech.pricefetcher.requestvalues.MenyRequestValues
+import no.exotech.pricefetcher.requestvalues.RequestValues
 
 class Meny : Store<MenyResponse> {
     override val requestValues: RequestValues = MenyRequestValues()

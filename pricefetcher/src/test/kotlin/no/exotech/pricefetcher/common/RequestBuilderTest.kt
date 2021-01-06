@@ -1,6 +1,7 @@
 package no.exotech.pricefetcher.common
 
-import no.exotech.pricefetcher.common.requestvalues.MenyRequestValues
+import no.exotech.pricefetcher.RequestBuilder
+import no.exotech.pricefetcher.requestvalues.MenyRequestValues
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Test
