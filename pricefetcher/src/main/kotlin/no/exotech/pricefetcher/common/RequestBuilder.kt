@@ -3,6 +3,8 @@ package no.exotech.pricefetcher.common
 import no.exotech.pricefetcher.common.requestvalues.RequestValues
 import okhttp3.Headers
 import okhttp3.Request
+import org.slf4j.LoggerFactory
+import java.util.concurrent.ConcurrentHashMap
 
 class RequestBuilder private constructor(private val requestValues: RequestValues) {
     private val requestBuilder = createRequestBuilder()
@@ -21,21 +23,20 @@ class RequestBuilder private constructor(private val requestValues: RequestValue
     }
 
     private fun flattenHeaders(): Array<String> {
-        return requestValues.getHeaders().flatMap { it.toList() }.toTypedArray()
+        return requestValues.headers.flatMap { it.toList() }.toTypedArray()
     }
 
     companion object {
-        private val requestBuilders = mutableMapOf<Class<out RequestValues>, RequestBuilder>()
+        private val LOGGER = LoggerFactory.getLogger(RequestBuilder::class.java)
+        private val requestBuilders = ConcurrentHashMap<Class<out RequestValues>, RequestBuilder>() // Thread safe mutable map
 
         fun getRequestBuilder(requestValues: RequestValues): RequestBuilder {
             val clazz = requestValues.javaClass
-            if (clazz !in requestBuilders.keys)
-                createRequestBuilder(requestValues)
-            return requestBuilders[clazz] as RequestBuilder
-        }
-
-        private fun createRequestBuilder(requestValues: RequestValues) {
-            requestBuilders[requestValues.javaClass] = RequestBuilder(requestValues)
+            if (clazz !in requestBuilders.keys) {
+                LOGGER.debug("Creating request builder for ${clazz.simpleName}")
+                requestBuilders[clazz] = RequestBuilder(requestValues)
+            }
+            return requestBuilders[clazz]!!
         }
     }
 }
