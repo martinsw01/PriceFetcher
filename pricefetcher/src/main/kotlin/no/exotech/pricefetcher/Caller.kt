@@ -3,6 +3,7 @@ package no.exotech.pricefetcher
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
 import no.exotech.pricefetcher.requestvalues.RequestValues
 import no.exotech.pricefetcher.stores.Store
@@ -21,9 +22,8 @@ object Caller {
     }
 
     private suspend fun <T : Any> awaitAndMap(responses: List<Deferred<String?>>, map: (String) -> T): List<T> {
-        return responses.mapNotNull { response ->
-            response.await()?.let { map(it) }
-        }
+        return responses.awaitAll()
+            .mapNotNull { it?.let(map) }
     }
 
     private suspend fun callAllPagesAsync(requestValues: RequestValues) = withContext(Dispatchers.IO) {
@@ -36,11 +36,11 @@ object Caller {
     private fun callPage(requestBuilder: RequestBuilder, page: Any): String? {
         val request = requestBuilder.withPage("$page")
         val call = client.newCall(request)
-        LOGGER.debug("Calling page: $page, ${request.url.host}")
+        LOGGER.debug("Calling page: $page, ${request.url}")
         return try {
             call.execute().use { it.body?.string() }
         } catch (e: IOException) {
-            LOGGER.warn("Failed to call store. Is there an internet connection?", e)
+            LOGGER.warn("Failed to call ${request.url}. Is there an internet connection?", e)
             return null
         }
     }
